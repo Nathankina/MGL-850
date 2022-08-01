@@ -1,0 +1,30 @@
+
+JUSTE AVANT LE DEBUT DES ÉLECTIONS:
+1) partir la blockchain avec le script python
+
+2)compiler et deploy le smart contract : python compile_and_deploy_smartcontract.py
+
+3) creer un nombre de token egales au nombre de personnes qui vont voter: python creer_tokens.py 100
+
+4) creer les comptes pour les  options:
+python create_new_user.py option1
+python create_new_user.py option2
+python create_new_user.py option3
+******************************************************************************************************************************
+
+À FAIRE QUAND UN VOTANT S'ENREGISTRE
+
+1)python create_new_user.py alberto
+2)donner au votant 1 token: cleos push action eosio.token transfer '[ "admin123", "alberto", "1 SYS", "m" ]' -p admin123@active
+
+À FAIRE POUR CHAQUE VOTANT
+
+
+1) envoyer le vote : cleos push action eosio.token transfer '[ "alberto", "option1", "1 SYS", "m" ]' -p alberto@active
+
+
+montrer resultas:
+
+cleos get currency balance eosio.token option1 SYS
+cleos get currency balance eosio.token option2 SYS
+cleos get currency balance eosio.token option3 SYS

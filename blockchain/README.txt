@@ -30,6 +30,7 @@ IL FAUT S'ASSURER AUSSI AVEC LA COMMANDE : "top" que tous les process de nodeos 
 PROCEDURE POUR PARTTIR LA BLOCKCHAIN
 
 1) partir la blockchain avec : nodeos -e -p eosio --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --delete-all-blocks
+ou utiliser python lancer_blockchain.py
 
 
 PROCEDURE POUR COMPILER LE SMART CONTRACT:
