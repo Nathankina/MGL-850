@@ -35,6 +35,12 @@
   $sql="Select * from election order by id DESC";
   $run= mysqli_query($db,$sql);
   while($row = mysqli_fetch_assoc($run)){
+    $date = $row['start'];
+    $now= date('y-m-d');
+    if($date== $now){
+        
+        //exec(‘python blockchain/lancer_blockchain.py’);
+   }
 
  ?>
 
@@ -43,8 +49,8 @@
     <div class="card">
   <img class="card-img-top" src="images/1.png" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title"><?php echo $row['name']; ?></h5>
-    <p class="card-text"><?php echo $row['description']; ?></p>
+    <h6 class="card-title" style="color: black; text-align: center; font-weight:600"><?php echo $row['name']; ?></h6>
+    <p class="card-text" style="text-align:justify;"><?php echo $row['description']; ?></p>
     <center>
     <a href="single_election.php?e_id=<?php echo $row['e_id']; ?>" class="btn btn-primary">Voir les details</a>
   </center>

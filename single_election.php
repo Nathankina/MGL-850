@@ -46,17 +46,74 @@ $row=mysqli_fetch_array($a1);
     <img src="images/1.png" style="width: 40%; height: 300px; ">
     
 <p style=" text-align: justify; margin-left: 20px;"> <span style="font-size: 24px; text-align: center; font-weight: 600"><?php echo $row['name']; ?></span>
-     <br>
+     <br><br>
       <span style="color: black; font-weight: 600">Date du début:</span> <?php echo $row['start']; ?>
       <br>
        <span style="color: black; font-weight: 600">Date de fin:</span> <?php echo $row['fin']; ?>
 
       <br>
-      <?php echo $row['description']; ?></p>
+      <?php echo $row['description']; ?>.<br><br>
+      <span style="color:black; font-weight:600">Listes de candidats:</span><br><br>
+      1. Nathan Kina<br>
+      2. Carlos Menimo<br>
+      3. Nicolas Beret.
+       
+    </p>
     
-  </div><br>
+  </div>
 
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Emettre votre voix</button>
+
+    <?php 
+    $e_id = $_GET['e_id'];
+       $user_id = $UserData['user_id'];
+
+ $c= "SELECT * FROM vote where user_id='$user_id' and e_id='$e_id'";
+ $run_c= mysqli_query($db,$c);
+   if(mysqli_num_rows($run_c)==1){
+
+     ?>
+   <p>  
+  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Emettre votre voix
+  </a>
+  </p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <form method="Post" enctype="multipart/form-data">
+      <input type="radio" name="option" value="Nathan Kina" > Option 1 => Nathan Kina<br>
+      <input type="radio" name="option" value="Carlos Menimo"> Option 2 => Carlos Menimo<br>
+      <input type="radio" name="option" value="Nicolas Beret"> Option 3 => Nicolas Beret
+ <br><br>
+      <input type="submit" name="submit" class="btn btn-primary btn-sm" value="Vous avez déjà soumis votre choix pour cette élection" disabled>
+    </form>
+  </div>
+</div>
+<?php }
+else{ ?>
+
+<p>  
+  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Emettre votre voix
+  </a>
+  </p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <form method="Post" enctype="multipart/form-data">
+      <input type="radio" name="option" value="Nathan Kina" > Option 1 => Nathan Kina<br>
+      <input type="radio" name="option" value="Carlos Menimo"> Option 2 => Carlos Menimo<br>
+      <input type="radio" name="option" value="Nicolas Beret"> Option 3 => Nicolas Beret
+ <br><br>
+      <input type="submit" name="submit" class="btn btn-primary btn-sm" value="Soumettre mon choix">
+    </form>
+  </div>
+</div>
+
+
+<?php } ?>
+  
+
+  
+  
 
   
   
@@ -114,7 +171,7 @@ $row=mysqli_fetch_array($a1);
 <?php include 'footer.php'; ?>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered " role="document">
     <div class="modal-content">
       <div class="modal-header text-center" style="background-color: #199DF9; color: white">
@@ -136,6 +193,7 @@ $row=mysqli_fetch_array($a1);
     </div>
   </div>
 </div>
+ -->
 
 
 
@@ -144,5 +202,43 @@ $row=mysqli_fetch_array($a1);
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
   </body>
 </html>
+
+<?php
+
+ if(isset($_POST['submit'])){
+
+      $option= mysqli_real_escape_string($db,trim($_POST['option']));
+       $e_id = $_GET['e_id'];
+       $user_id = $UserData['user_id'];
+       // exec(‘python blockchain/compile_and_deploy_smartcontract.py’);
+       // exec(‘python create_new_user.py admin123’);
+       // exec(‘python creer_tokens.py 100’);
+       // exec(‘python create_new_user.py option1’);
+       // exec(‘python create_new_user.py option2’);
+       // exec(‘python create_new_user.py option3’); 
+       // exec(‘python create_new_user.py alberto’);
+       
+      
+
+$sql="INSERT INTO vote(e_id,user_id,option) VALUES('$e_id','$user_id','$option')";
+
+ $result = mysqli_query($db,$sql);
+    if($result){
+
+      // echo "<script> alert('La tenue a été ajoutée avec succès'); </script>";
+   //    echo mysqli_error($db);
+
+      
+      echo "<script>window.open('single_election.php?e_id=$e_id','_self')</script>";
+    }else{
+      die(mysqli_error($db));
+    }
+
+     }
+
+
+?>

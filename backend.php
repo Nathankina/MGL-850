@@ -79,6 +79,7 @@ if(isset($_POST['connexion'])){
       extract($row);
       $_SESSION['is_UserLogin']=true;
       $_SESSION['id']=$id;
+      
       echo "<script>window.open('index.php','_self') </script> ";
       
       }
